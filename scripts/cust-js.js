@@ -12,7 +12,7 @@ function dropdown() {
 function toDoList() {
     return {
         newTodo: "", // il todo che si sta inserendo
-        todos: [], // la lista dei todo già inseriti
+        todos: [], // la lista dei todo aggiunti
         addToDo() {
             this.todos.push({
                 todoText: this.newTodo,
@@ -49,8 +49,11 @@ function toDoList() {
             }
         },
         editing(index) {
-            this.todos[index].isEditing = true
-            this.todos[index].todoText = this.todos[index].todoText
+            this.todos[index].isEditing = true;
+            this.todos[index].todoText = this.todos[index].todoText;
+            this.$nextTick(() => {
+                document.getElementById(`edit-elem-${index}`).focus()
+              })
         },
         countIncomplete() {
             return this.todos.reduce(
