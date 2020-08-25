@@ -69,8 +69,8 @@
                                 />
                             </div>
                             <div class="w-1/5 h-12">
-                                <button class="px-2 py-1 rounded mt-2" @click="deleteToDo(index)" style="color:gray" :disabled="todo.isEditing">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                <button class="px-2 py-1 rounded mt-2" @click="deleteToDo(index)" style="color:gray" :disabled="todo.isEditing" :class="{'cursor-default': todo.isEditing}">
+                                    <i class="fa fa-trash" :class="{'text-gray-300': todo.isEditing}"></i>
                                 </button>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 rounded-full"
                             x-show="countIncomplete() < todos.length"
-                            @click="clearIncomplete();"
+                            @click="clearCompleted();"
                             >       
                             Rimuovi completati
                         </button>
@@ -105,32 +105,6 @@
 <style>
     [x-cloak] { display: none; }
 
-    .dropmenu{
-        position: absolute;
-        top: 100%;
-        left: 0;
-        z-index: 1000;
-        float: left;
-        min-width: 10rem;
-        padding: .5rem 0;
-        margin: .125rem 0 0;
-        font-size: 1rem;
-        color: #212529;
-        text-align: left;
-        list-style: none;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid rgba(0,0,0,.15);
-        border-radius: .25rem;
-    }
-
-    .hidden{
-        display: none;
-    }
-
-    .border-btm {
-        border-bottom: 2px lightgrey solid;
-    }
     .canceled {
         text-decoration: line-through;
     }

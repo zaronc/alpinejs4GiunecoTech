@@ -1,14 +1,3 @@
-function dropdown() {
-    return {
-        show: false,
-        disable_btn: false,
-        open() { this.show = true; this.disable_btn = true },
-            close() { this.show = false, this.disable_btn = false },
-        isOpen() { return this.show === true },
-        antani(){ this.close(); window.alert('antani')}
-    }
-}
-
 function toDoList() {
     return {
         newTodo: "", // il testo del todo che si sta inserendo
@@ -56,16 +45,15 @@ function toDoList() {
               })
         },
         countIncomplete() {
-            return this.todos.reduce(
-              (acc, { completed }) => acc + Number(!completed),
-              0,
-            )
+            var count = 0;
+            this.todos.forEach(fe=>{
+                if (!fe.completed)
+                    count++;                
+            });
+            return count;
         },
-        clearIncomplete() {
+        clearCompleted() {
             this.todos = this.todos.filter(isNotCompleted);
-            var temp = this.todos;
-            this.todos = [];
-            this.todos = temp;
         },
     };
 }
