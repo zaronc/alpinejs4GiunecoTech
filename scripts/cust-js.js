@@ -11,7 +11,7 @@ function dropdown() {
 
 function toDoList() {
     return {
-        newTodo: "", // il todo che si sta inserendo
+        newTodo: "", // il testo del todo che si sta inserendo
         todos: [], // la lista dei todo aggiunti
         addToDo() {
             this.todos.push({
