@@ -46,8 +46,8 @@ function toDoList() {
         },
         countIncomplete() {
             var count = 0;
-            this.todos.forEach(fe=>{
-                if (!fe.completed)
+            this.todos.forEach(todo=>{
+                if (!todo.completed)
                     count++;                
             });
             return count;

@@ -70,7 +70,7 @@
                             </div>
                             <div class="w-1/5 h-12">
                                 <button class="px-2 py-1 rounded mt-2" @click="deleteToDo(index)" style="color:gray" :disabled="todo.isEditing" :class="{'cursor-default': todo.isEditing}">
-                                    <i class="fa fa-trash" :class="{'text-gray-300': todo.isEditing}"></i>
+                                    <span :class="{'text-gray-300': todo.isEditing}"><i class="fa fa-trash"></i></span>
                                 </button>
                             </div>
                         </div>
