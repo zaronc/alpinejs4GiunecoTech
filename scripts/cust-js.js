@@ -11,8 +11,8 @@ function toDoList() {
 
             this.newTodo = "";
         },
-        toggleToDoCompleted(index, { target: { checked } }) {
-            this.todos[index].completed = checked;
+        toggleToDoCompleted(index, value) {
+            this.todos[index].completed = value;
         },
         deleteToDo(index) {
             this.todos = this.todos.filter((todo, todoIndex) => {
