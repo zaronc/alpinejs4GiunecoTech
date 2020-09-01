@@ -13,100 +13,71 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.2.0/tailwind.min.css">
     </head>
+
     <body>
-        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Navbar menu</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li style="padding-top: 5px;" x-data="{ isOpen: false }" x-on:click="isOpen=true">
-                    <a class="dropdown-toggle" style="cursor: pointer;">
-                        <i class="fas fa-user-circle fa-lg"></i>
-                    </a>
-                    <div class="dropmenu" x-cloak x-bind:class="{ 'hidden': !isOpen }"
-                         x-on:click.away="isOpen=false">
-                        <a class="dropdown-item" href="#">Profile</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Logout</a>
-                      </div>
-                </li>
-                
-              </ul>
-            </div>
-        </nav> -->
 
-        
-    <div class="max-w-4xl mx-auto my-40 rounded-lg shadow-xl">
-  
-        <div class="text-3xl mx-auto rounded-t-lg font-bold text-center bg-blue-300">
-            To Do List
-        </div>
-        <div x-data="toDoList()" class="text-center pt-5 bg-blue-200">
-            <div class="max-w-2xl mx-auto mb-10">
-                <input type="text" x-model="newTodo" placeholder="Cosa devo fare?" class="text-2xl mx-auto px-4 py-2 rounded shadow text-lg min-w-full" @keydown.enter="addToDo">
+        <div class="max-w-4xl mx-auto my-40 rounded-lg shadow-xl">
+    
+            <div class="text-3xl mx-auto rounded-t-lg font-bold text-center bg-blue-300">
+                To Do List
             </div>
-            <div x-show="todos.length > 0" class="bg-white rounded shadow max-w-2xl mx-auto">
-                <template x-for="(todo, index) in todos" :key="index">
-                        <div class="flex max-w-2xl mx-auto rounded shadow-lg">
-                            <div class="w-1/5 h-12">
-                                <input type="checkbox" @change="toggleToDoCompleted(index, $event.target.checked)" x-model="todo.completed" :disabled="todo.isEditing" class="mt-4">
+            <div x-data="toDoList()" class="text-center pt-5 bg-blue-200">
+                <div class="max-w-2xl mx-auto mb-10">
+                    <input type="text" x-model="newTodo" placeholder="Cosa devo fare?" class="text-2xl mx-auto px-4 py-2 rounded shadow text-lg min-w-full" @keydown.enter="addToDo">
+                </div>
+                <div x-show="todos.length > 0" class="bg-white rounded shadow max-w-2xl mx-auto">
+                    <template x-for="(todo, index) in todos" :key="index">
+                            <div class="flex max-w-2xl mx-auto rounded shadow-lg">
+                                <div class="w-1/5 h-12">
+                                    <input type="checkbox" @change="toggleToDoCompleted(index, $event.target.checked)" x-model="todo.completed" :disabled="todo.isEditing" class="mt-4">
+                                </div>
+                                <div class="w-3/5 h-12" @dblclick="editing(index)">
+                                    <div class="mt-2"><label x-text="todo.todoText" x-show="!todo.isEditing" :class="{ 'canceled': todo.completed }"></label></div>
+                                    <input
+                                        type="text"
+                                        x-show="todo.isEditing"
+                                        :id="`edit-elem-${index}`"
+                                        x-model="todo.todoText"
+                                        @keydown.enter="edit(index)"
+                                        @keydown.escape="edit(index)"
+                                        @click.away="edit(index)"
+                                    />
+                                </div>
+                                <div class="w-1/5 h-12">
+                                    <button class="px-2 py-1 rounded mt-2" @click="deleteToDo(index)" style="color:gray" :disabled="todo.isEditing" :class="{'cursor-default': todo.isEditing}">
+                                        <span :class="{'text-gray-300': todo.isEditing}"><i class="fa fa-trash"></i></span>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="w-3/5 h-12" @dblclick="editing(index)">
-                                <div class="mt-2"><label x-text="todo.todoText" x-show="!todo.isEditing" :class="{ 'canceled': todo.completed }"></label></div>
-                                <input
-                                    type="text"
-                                    x-show="todo.isEditing"
-                                    :id="`edit-elem-${index}`"
-                                    x-model="todo.todoText"
-                                    @keydown.enter="edit(index)"
-                                    @keydown.escape="edit(index)"
-                                    @click.away="edit(index)"
-                                />
-                            </div>
-                            <div class="w-1/5 h-12">
-                                <button class="px-2 py-1 rounded mt-2" @click="deleteToDo(index)" style="color:gray" :disabled="todo.isEditing" :class="{'cursor-default': todo.isEditing}">
-                                    <span :class="{'text-gray-300': todo.isEditing}"><i class="fa fa-trash"></i></span>
-                                </button>
-                            </div>
+                    </template>
+
+                    <div class="flex max-w-2xl mx-auto py-4">
+                        <div class="w-1/2 text-center">
+                            <span x-text="numberOfToDosCompleted()"></span> / <span x-text="toDoCount()"></span> todo completati 
                         </div>
-                </template>
-
-                <div class="flex max-w-2xl mx-auto py-4">
-                    <div class="w-1/2 text-center">
-                        <span x-text="numberOfToDosCompleted()"></span> / <span x-text="toDoCount()"></span> todo completati 
-                    </div>
-                    <div class="w-1/2 text-center">
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 rounded-full"
-                            x-show="countIncomplete() < todos.length"
-                            @click="clearCompleted();"
-                            >       
-                            Rimuovi completati
-                        </button>
-                    </div>
-                </div>                
-            </div>
-            <div>
-                <span>doppio click sul todo per modificare</span>
-            </div>
+                        <div class="w-1/2 text-center">
+                            <button
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 rounded-full"
+                                x-show="countIncomplete() < todos.length"
+                                @click="clearCompleted();"
+                                >       
+                                Rimuovi completati
+                            </button>
+                        </div>
+                    </div>                
+                </div>
+                <div>
+                    <span>doppio click sul todo per modificare</span>
+                </div>
+            </div>       
         </div>
-    </div>
-
     </body>
 
+    <style>
+        [x-cloak] { display: none; }
 
-
-
-<style>
-    [x-cloak] { display: none; }
-
-    .canceled {
-        text-decoration: line-through;
-    }
-</style>
+        .canceled {
+            text-decoration: line-through;
+        }
+    </style>
 </html>

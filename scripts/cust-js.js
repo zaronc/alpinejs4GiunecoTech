@@ -55,7 +55,18 @@ function toDoList() {
         clearCompleted() {
             this.todos = this.todos.filter(isNotCompleted);
         },
+        ant(elem){
+            console.log("aaa");
+        }
     };
+}
+function custM(){
+    return {
+        antani: true, 
+        ant(elem){
+            console.log(elem);
+        }
+};
 }
 function isNotCompleted( { completed }) {
     return !completed;
