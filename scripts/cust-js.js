@@ -2,6 +2,7 @@ function toDoList() {
     return {
         newTodo: "", // il testo del todo che si sta inserendo
         todos: [], // la lista dei todo aggiunti
+        
         addToDo() {
             this.todos.push({
                 todoText: this.newTodo,
@@ -54,20 +55,10 @@ function toDoList() {
         },
         clearCompleted() {
             this.todos = this.todos.filter(isNotCompleted);
-        },
-        ant(elem){
-            console.log("aaa");
         }
     };
 }
-function custM(){
-    return {
-        antani: true, 
-        ant(elem){
-            console.log(elem);
-        }
-};
-}
+
 function isNotCompleted( { completed }) {
     return !completed;
 }
